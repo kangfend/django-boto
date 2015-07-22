@@ -123,6 +123,7 @@ class S3Storage(Storage):
         """
         Save file.
         """
+        name = name.strip('./')
         key = self.bucket.new_key(name)
         content.seek(0)
 
