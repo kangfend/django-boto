@@ -30,13 +30,17 @@ class S3Storage(Storage):
     """
 
     def __init__(self, bucket_name=None, key=None, secret=None, location=None,
-                 host=None, policy=None, replace=True, force_http_url=False):
+                 host=None, policy=None, replace=True, force_http_url=False,
+                 proxy=None, proxy_port=None, is_secure=None):
 
         self.bucket_name = bucket_name if bucket_name else settings.BOTO_S3_BUCKET
         self.key = key if key else settings.AWS_ACCESS_KEY_ID
         self.secret = secret if secret else settings.AWS_SECRET_ACCESS_KEY
         self.location = location if location else settings.BOTO_BUCKET_LOCATION
         self.host = host if host else settings.BOTO_S3_HOST
+        self.proxy = proxy if proxy else settings.BOTO_S3_PROXY
+        self.proxy_port = proxy_port if proxy_port else settings.BOTO_S3_PROXY_PORT
+        self.is_secure = is_secure if is_secure else settings.BOTO_S3_IS_SECURE
         self.policy = policy if policy else settings.AWS_ACL_POLICY
         self.force_http = force_http_url if force_http_url else settings.AWS_S3_FORCE_HTTP_URL
         self.replace = replace
@@ -52,7 +56,10 @@ class S3Storage(Storage):
             self.s3 = connect_s3(
                 aws_access_key_id=self.key,
                 aws_secret_access_key=self.secret,
-                host=self.host)
+                host=self.host,
+                proxy=self.proxy,
+                proxy_port=self.proxy_port,
+                is_secure=self.is_secure)
             try:
                 self._bucket = self.s3.create_bucket(
                     self.bucket_name, location=self.location, policy=self.policy)

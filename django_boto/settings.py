@@ -17,3 +17,9 @@ BOTO_S3_HOST = getattr(settings, 'BOTO_S3_HOST', 's3.amazonaws.com')
 BOTO_BUCKET_LOCATION = getattr(settings, 'BOTO_BUCKET_LOCATION', 'DEFAULT')
 
 AWS_S3_FORCE_HTTP_URL = getattr(settings, 'AWS_S3_FORCE_HTTP_URL', False)
+
+BOTO_S3_PROXY = getattr(settings, 'BOTO_S3_PROXY', None)
+
+BOTO_S3_PROXY_PORT = getattr(settings, 'BOTO_S3_PROXY_PORT', None)
+
+BOTO_S3_IS_SECURE = getattr(settings, 'BOTO_S3_IS_SECURE', True)
